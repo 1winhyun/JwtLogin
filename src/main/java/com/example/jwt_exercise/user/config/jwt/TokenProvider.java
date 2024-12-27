@@ -51,8 +51,9 @@ public class TokenProvider {
 
     public Authentication getAuthentication(String token){
         Claims claims=getClaims(token);
+        String name = claims.getSubject();//@AuthenticationPrincipal 을 사용하고 싶다면 인증을 가져오는 메서드에 인증할 변수를 반드시 추가해줘야한다.
         Set<SimpleGrantedAuthority> authorities= Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"));
-        return new UsernamePasswordAuthenticationToken(new org.springframework.security.core.userdetails.User(claims.getSubject(),"",authorities),token,authorities);
+        return new UsernamePasswordAuthenticationToken(name,token,authorities);
     }
 
     public Long getUserId(String token){
